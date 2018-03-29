@@ -1,6 +1,3 @@
-# Dockerfile - alpine
-# https://github.com/openresty/docker-openresty
-
 FROM alpine:3.7
 
 # Docker Build Arguments
