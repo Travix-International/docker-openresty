@@ -1,4 +1,4 @@
-FROM openresty/openresty:1.13.6.1-alpine
+FROM openresty/openresty:1.13.6.2-2-alpine
 
 EXPOSE 80 81 82 443 9101
 
@@ -26,6 +26,7 @@ ENV OFFLOAD_TO_HOST=localhost \
     NAMESPACE="mynamespace" \
     DNS_ZONE="travix.com" \
     CLIENT_MAX_BODY_SIZE="128m" \
+    CLIENT_BODY_BUFFER_SIZE="16k" \
     CLIENT_BODY_TIMEOUT="60s" \
     CLIENT_HEADER_TIMEOUT="60s" \
     KEEPALIVE_TIMEOUT="650s" \
@@ -34,6 +35,9 @@ ENV OFFLOAD_TO_HOST=localhost \
     PROXY_CONNECT_TIMEOUT="60s" \
     PROXY_SEND_TIMEOUT="60s" \
     PROXY_READ_TIMEOUT="60s" \
+    PROXY_BUFFERS_NUMBER="16" \
+    PROXY_BUFFERS_SIZE="64k" \
+    PROXY_BUFFER_SIZE="16k" \
     ENFORCE_HTTPS="true" \
     PROMETHEUS_METRICS_PORT="9101" \
     DEFAULT_BUCKETS="{0.005, 0.01, 0.02, 0.03, 0.05, 0.075, 0.1, 0.2, 0.3, 0.4, 0.5, 0.75, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 7.5, 10, 15, 20, 30, 60, 120}" \
