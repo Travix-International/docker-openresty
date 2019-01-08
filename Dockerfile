@@ -43,6 +43,10 @@ ENV OFFLOAD_TO_HOST=localhost \
     SSL_PROTOCOLS="TLSv1.2" \
     SETUP_CORS="false" \
     CORS_ALLOWED_ORIGINS="*" \
-    CORS_MAX_AGE="86400"
+    CORS_MAX_AGE="86400" \
+    GRACEFUL_SHUTDOWN_DELAY_SECONDS="5"
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
+
+# Reset change of stopsignal in openresty container at https://github.com/openresty/docker-openresty/blob/master/alpine/Dockerfile#L124
+STOPSIGNAL SIGTERM
