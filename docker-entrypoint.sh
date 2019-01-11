@@ -15,7 +15,6 @@ sigterm_handler() {
   echo "Gracefully shutting down openresty in ${GRACEFUL_SHUTDOWN_DELAY_SECONDS}s..."
   sleep $GRACEFUL_SHUTDOWN_DELAY_SECONDS
   /usr/local/openresty/bin/openresty -s quit
-  echo "Finished shutting down openresty!"
 
   # stop inotifywait
   inotifywait_pid=$(pgrep inotifywait)
@@ -66,7 +65,7 @@ fi
 
 # substitute envvars in nginx.conf
 echo "Generating nginx.conf..."
-cat ${NGINX_CONF_TMPL_PATH} | envsubst \$OFFLOAD_TO_HOST,\$OFFLOAD_TO_PORT,\$OFFLOAD_TO_PROTO,\$HEALT_CHECK_PATH,\$ALLOW_CIDRS,\$SERVICE_NAME,\$NAMESPACE,\$DNS_ZONE,\$CLIENT_MAX_BODY_SIZE,\$CLIENT_BODY_TIMEOUT,\$CLIENT_HEADER_TIMEOUT,\$KEEPALIVE_TIMEOUT,\$KEEPALIVE_REQUESTS,\$SEND_TIMEOUT,\$PROXY_CONNECT_TIMEOUT,\$PROXY_SEND_TIMEOUT,\$PROXY_READ_TIMEOUT,\$PROMETHEUS_METRICS_PORT,\$SSL_PROTOCOLS > /usr/local/openresty/nginx/conf/nginx.conf
+cat ${NGINX_CONF_TMPL_PATH} | envsubst \$OFFLOAD_TO_HOST,\$OFFLOAD_TO_PORT,\$OFFLOAD_TO_PROTO,\$HEALT_CHECK_PATH,\$ALLOW_CIDRS,\$SERVICE_NAME,\$NAMESPACE,\$DNS_ZONE,\$CLIENT_MAX_BODY_SIZE,\$CLIENT_BODY_TIMEOUT,\$CLIENT_HEADER_TIMEOUT,\$KEEPALIVE_TIMEOUT,\$KEEPALIVE_TIMEOUT_HEADER,\$SEND_TIMEOUT,\$PROXY_CONNECT_TIMEOUT,\$PROXY_SEND_TIMEOUT,\$PROXY_READ_TIMEOUT,\$PROMETHEUS_METRICS_PORT,\$SSL_PROTOCOLS > /usr/local/openresty/nginx/conf/nginx.conf
 
 if [ "${SETUP_CORS}" == "true" ]; then
   echo "Generating cors.conf..."
@@ -100,3 +99,4 @@ while true
 do
   tail -f /dev/null & wait ${!}
 done
+echo "Finished shutting down openresty!"
