@@ -12,34 +12,34 @@ pipelines:
     repositories:
     - travix
 
-  # push-to-docker-hub-branch:
-  #   image: extensions/docker:stable
-  #   action: push
-  #   container: ${ESTAFETTE_LABEL_CONTAINER}
-  #   repositories:
-  #   - travix
-  #   tags:
-  #   - ${ESTAFETTE_GIT_BRANCH}
-  #   when:
-  #     status == 'succeeded' &&
-  #     branch != 'master'
+  push-to-docker-hub-branch:
+    image: extensions/docker:stable
+    action: push
+    container: ${ESTAFETTE_LABEL_CONTAINER}
+    repositories:
+    - travix
+    tags:
+    - ${ESTAFETTE_GIT_BRANCH}
+    when:
+      status == 'succeeded' &&
+      branch != 'master'
 
-  # push-to-docker-hub-latest:
-  #   image: extensions/docker:stable
-  #   action: push
-  #   container: ${ESTAFETTE_LABEL_CONTAINER}
-  #   repositories:
-  #   - travix
-  #   tags:
-  #   - latest
-  #   when:
-  #     status == 'succeeded' &&
-  #     branch == 'master'
+  push-to-docker-hub-latest:
+    image: extensions/docker:stable
+    action: push
+    container: ${ESTAFETTE_LABEL_CONTAINER}
+    repositories:
+    - travix
+    tags:
+    - latest
+    when:
+      status == 'succeeded' &&
+      branch == 'master'
 
-  # slack-notify:
-  #   image: extensions/slack-build-status:stable
-  #   workspace: travix
-  #   channels:
-  #   - '#swat-team'
-  #   when:
-  #     status == 'failed'
+  slack-notify:
+    image: extensions/slack-build-status:stable
+    workspace: travix
+    channels:
+    - '#swat-team'
+    when:
+      status == 'failed'
